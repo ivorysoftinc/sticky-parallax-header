@@ -50,13 +50,14 @@ class StickyParallaxHeader extends Component {
   }
 
   onScrollEndSnapToEdge = (scrollHeight) => {
+    const { isFolded } = this.state
     const { snapToEdge } = this.props
     const scrollNode = this.scroll.getNode()
     // eslint-disable-next-line no-underscore-dangle
     const scrollValue = this.scrollY.__getValue()
     const { y } = scrollValue
     const snapToEdgeAnimatedValue = new ValueXY(scrollValue)
-    const snapToEdgeTreshold = scrollHeight / 2
+    const snapToEdgeTreshold = !isFolded ? 100 : scrollHeight - 100;
     const id = snapToEdgeAnimatedValue.addListener((value) => {
       scrollNode.scrollTo({ x: 0, y: value.y, animated: false })
     })
